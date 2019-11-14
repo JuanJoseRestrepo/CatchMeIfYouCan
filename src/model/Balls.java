@@ -74,4 +74,5 @@ private enum Direction{Derecha, Izquierda,Arriba,Abajo};
 		return Math.sqrt(pow1);
 	}
 	
+	
 }
