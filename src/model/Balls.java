@@ -9,11 +9,12 @@ private enum Direction{Derecha, Izquierda,Arriba,Abajo};
 	private int posX;
 	private int posY;
 	private int espera;
-	private Direction direccion;
+	private String direccion;
 	private int robetes;
 	private boolean stop;
-
-	public Balls(int radio, int posX, int posY, int espera, Direction direccion, int robetes, boolean stop) {
+	
+	
+	public Balls(int radio, int posX, int posY, int espera, String direccion, int robetes, boolean stop) {
 		super();
 		this.radio = radio;
 		this.posX = posX;
@@ -47,10 +48,10 @@ private enum Direction{Derecha, Izquierda,Arriba,Abajo};
 	public void setEspera(int espera) {
 		this.espera = espera;
 	}
-	public Direction getDireccion() {
+	public String getDireccion() {
 		return direccion;
 	}
-	public void setDireccion(Direction direccion) {
+	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
 	public int getRobetes() {
@@ -66,6 +67,11 @@ private enum Direction{Derecha, Izquierda,Arriba,Abajo};
 		this.stop = stop;
 	}
 	
-	
+	public Double distance(Balls m) {
+    	double pow1 = Math.pow((posX - m.getPosX()), 2);
+    	double pow2 = Math.pow((posY - m.getPosY()), 2);
+    	pow1 = pow1 + pow2;
+		return Math.sqrt(pow1);
+	}
 	
 }
