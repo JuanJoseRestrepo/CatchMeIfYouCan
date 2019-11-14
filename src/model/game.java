@@ -56,13 +56,14 @@ public class game implements Serializable{
 	}
 	
 	public void readGame() {
-		File fl = new File("files/");
+		File fl = new File("files\\Juego.txt");
 		try {
 			FileReader fr = new FileReader(fl);
 			BufferedReader br = new BufferedReader(fr);
 			br.readLine();
-			int a = Integer.parseInt(br.readLine());
+			int a = Integer.parseInt(br.readLine()); 
 			game gamenew = new game(a,0);
+			br.readLine();
 			String a1 = br.readLine();
 			while(a1 != null) {
 				String[] b = a1.split(",");
@@ -80,8 +81,9 @@ public class game implements Serializable{
 					Balls m1 = new Balls(radio,posX,posY,espera,direccion,rebotes,true);
 					bolas.add(m1);
 				}
-				
+				a1 = br.readLine();
 			}
+			br.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

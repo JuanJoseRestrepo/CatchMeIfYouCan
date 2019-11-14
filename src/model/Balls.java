@@ -1,10 +1,7 @@
 package model;
 
-import com.sun.javafx.scene.traversal.Direction;
-
 public class Balls {
 
-private enum Direction{Derecha, Izquierda,Arriba,Abajo};
 	private int radio;
 	private int posX;
 	private int posY;
@@ -74,5 +71,12 @@ private enum Direction{Derecha, Izquierda,Arriba,Abajo};
 		return Math.sqrt(pow1);
 	}
 	
+	public void mover() {
+		int movx = posX;
+		int movY = posY;
+		
+		
+		
+	}
 	
 }

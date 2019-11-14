@@ -19,9 +19,8 @@ public class ThreadGame extends Thread {
 
 	@Override
 	public void run() {
-		while(balls.isStop() == false) {
-			
-		}
+
+		
 		
 	}
 
