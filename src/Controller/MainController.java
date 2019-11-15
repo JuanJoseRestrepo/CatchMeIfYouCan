@@ -8,14 +8,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Arc;
 import model.*;
 
 public class MainController implements Initializable {
 
 	private game juego;
+	private game juego1;
 	private Canvas canvas;
 	@FXML
 	private MenuItem m;
@@ -25,7 +29,15 @@ public class MainController implements Initializable {
 	private MenuItem m2;
 	@FXML
 	private AnchorPane board;
+	@FXML
+	private BorderPane pane;
+	
+	private Pane pane1;
+	private GraphicsContext p;
+	
 	private Arc bola;
+	
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	
@@ -35,20 +47,23 @@ public class MainController implements Initializable {
 	
 	public void loadGame(ActionEvent e) {
 		juego.readGame();
-		juego = new game(juego.getNivel(),juego.getPuntaje());
+		
+		juego1 = new game(juego.getNivel(),juego.getPuntaje());
+		System.out.println(juego.getNivel());
 		createBalls(juego.getBolas());
 	}
 	
 	public void createBalls(ArrayList<Balls> m) {
-		
+		pane1 = new Pane();		
 		for(int i = 0; i < m.size();i++) {
 			
-			bola = new Arc();
-			
-			board.getChildren().add(bola);
+			bola = new Arc(20, 20, 200, 200, 0, 180);
+			pane1.getChildren().add(bola);	
+	
 		}
-		
-		
+		pane.setCenter(pane1);
+		pane1.getChildren().add(canvas);
+		p = canvas.getGraphicsContext2D();
 	}
 	
 

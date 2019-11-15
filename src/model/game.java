@@ -55,6 +55,7 @@ public class game implements Serializable{
 		this.puntajes = puntajes;
 	}
 	
+	
 	public void readGame() {
 		File fl = new File("files\\Juego.txt");
 		try {
@@ -64,8 +65,8 @@ public class game implements Serializable{
 			int a = Integer.parseInt(br.readLine()); 
 			game gamenew = new game(a,0);
 			br.readLine();
-			String a1 = br.readLine();
-			while(a1 != null) {
+			String a1;
+			while((a1 = br.readLine()) != null) {
 				String[] b = a1.split(",");
 				int radio = Integer.parseInt(b[0]);
 				int posX = Integer.parseInt(b[1]);
@@ -74,14 +75,10 @@ public class game implements Serializable{
 				String direccion = b[4];
 				int rebotes = Integer.parseInt(b[5]);
 				String stopped = b[6];
-				if(stopped.equalsIgnoreCase("false")) {
+					if(stopped.equalsIgnoreCase("false")){
 					Balls m = new Balls(radio,posX,posY,espera,direccion,rebotes,false);
 					bolas.add(m);
-				}else {
-					Balls m1 = new Balls(radio,posX,posY,espera,direccion,rebotes,true);
-					bolas.add(m1);
-				}
-				a1 = br.readLine();
+					}	
 			}
 			br.close();
 		} catch (FileNotFoundException e) {
