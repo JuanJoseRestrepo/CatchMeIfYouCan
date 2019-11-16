@@ -70,14 +70,15 @@ public class Balls {
     	pow1 = pow1 + pow2;
 		return Math.sqrt(pow1);
 	}
-	
+	 
 	public void move(double maxX, double maxY,String direction) {
 		double advance = 10;
 		double radius = radio/2;
-		switch(direction) {
+		switch(direction) { 
 			case "ABAJO":
 				if(posY+advance+radius>maxY) {
 					direction = "ARRIBA";
+	
 					posY = (int) (maxY-radius);
 				}else {
 					posY = (int) (posY+advance);					
@@ -86,6 +87,7 @@ public class Balls {
 			case "DERECHA":
 				if(posX+advance+radius>maxX) {
 					direction = "IZQUIERDA";
+					
 					posX = (int) (maxX-radius);
 				}else {
 					posX = (int) (posX+advance);					
@@ -93,6 +95,7 @@ public class Balls {
 				break;
 			case "ARRIBA":
 				if(posY-advance-radius<0) {
+					
 					direction = "ABAJO";
 					posY = (int) radius;
 				}else {
@@ -101,7 +104,8 @@ public class Balls {
 				break;
 			case "IZQUIERDA":
 				if(posX-advance-radius<0) {
-					direction = "DERECHA";
+					
+					setDireccion(direction);
 					posX = (int) radius;
 				}else {
 					posX = (int) (posX-advance);			

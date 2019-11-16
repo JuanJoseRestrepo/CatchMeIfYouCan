@@ -63,7 +63,7 @@ public class game implements Serializable{
 			BufferedReader br = new BufferedReader(fr);
 			br.readLine();
 			int a = Integer.parseInt(br.readLine()); 
-			game gamenew = new game(a,0);
+			setNivel(a);
 			br.readLine();
 			String a1;
 			while((a1 = br.readLine()) != null) {
