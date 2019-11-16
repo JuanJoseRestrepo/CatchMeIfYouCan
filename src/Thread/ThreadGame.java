@@ -15,6 +15,11 @@ public class ThreadGame extends Thread {
 		
 	}
 
+	public void moveBall() {
+		
+		
+		
+	}
 
 
 	@Override

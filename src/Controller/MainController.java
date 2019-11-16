@@ -2,6 +2,7 @@ package Controller;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Arc;
 import model.*;
+import Thread.*;
 
 public class MainController implements Initializable {
 
@@ -28,14 +30,11 @@ public class MainController implements Initializable {
 	@FXML
 	private MenuItem m2;
 	@FXML
-	private AnchorPane board;
-	@FXML
 	private BorderPane pane;
-	
+	@FXML
 	private Pane pane1;
-	private GraphicsContext p;
 	
-	private Arc bola;
+	private List<ThreadGame> games;
 	
 	
 	@Override
@@ -43,6 +42,9 @@ public class MainController implements Initializable {
 	
 		canvas = new Canvas(512,512);
 		juego = new game(0,0);
+		games = new ArrayList<ThreadGame>();
+		System.out.println(darMayorHeight());
+		System.out.println(darMayorWithd());
 	}
 	
 	public void loadGame(ActionEvent e) {
@@ -54,17 +56,26 @@ public class MainController implements Initializable {
 	}
 	
 	public void createBalls(ArrayList<Balls> m) {
-		pane1 = new Pane();		
+		
 		for(int i = 0; i < m.size();i++) {
-			
-			bola = new Arc(20, 20, 200, 200, 0, 180);
-			pane1.getChildren().add(bola);	
+
 	
 		}
 		pane.setCenter(pane1);
 		pane1.getChildren().add(canvas);
-		p = canvas.getGraphicsContext2D();
 	}
 	
 
+	public Double darMayorHeight() {
+		
+		return pane1.getPrefHeight();
+		
+	}
+	
+	public Double darMayorWithd() {
+	
+		return pane1.getPrefWidth();
+		
+	}
+	
 }
