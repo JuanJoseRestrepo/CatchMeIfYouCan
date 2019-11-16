@@ -71,12 +71,44 @@ public class Balls {
 		return Math.sqrt(pow1);
 	}
 	
-	public void mover() {
-		int movx = posX;
-		int movY = posY;
-		
-		
-		
-	}
+	public void move(double maxX, double maxY,String direction) {
+		double advance = 10;
+		double radius = radio/2;
+		switch(direction) {
+			case "ABAJO":
+				if(posY+advance+radius>maxY) {
+					direction = "ARRIBA";
+					posY = (int) (maxY-radius);
+				}else {
+					posY = (int) (posY+advance);					
+				}
+				break;
+			case "DERECHA":
+				if(posX+advance+radius>maxX) {
+					direction = "IZQUIERDA";
+					posX = (int) (maxX-radius);
+				}else {
+					posX = (int) (posX+advance);					
+				}
+				break;
+			case "ARRIBA":
+				if(posY-advance-radius<0) {
+					direction = "ABAJO";
+					posY = (int) radius;
+				}else {
+					posY = (int) (posY-advance);			
+				}
+				break;
+			case "IZQUIERDA":
+				if(posX-advance-radius<0) {
+					direction = "DERECHA";
+					posX = (int) radius;
+				}else {
+					posX = (int) (posX-advance);			
+				}
+				break;
+			}
+		}
+
 	
 }
