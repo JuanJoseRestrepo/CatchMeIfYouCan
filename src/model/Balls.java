@@ -1,42 +1,46 @@
 package model;
 
+
+
 public class Balls {
 
-	private int radio;
-	private int posX;
-	private int posY;
+	private Double radio;
+	private Double posX;
+	private Double posY;
 	private int espera;
-	private String direccion;
+	private Direction direccion;
 	private int robetes;
 	private boolean stop;
 	
-	
-	public Balls(int radio, int posX, int posY, int espera, String direccion, int robetes, boolean stop) {
-		super();
-		this.radio = radio;
-		this.posX = posX;
-		this.posY = posY;
-		this.espera = espera;
-		this.direccion = direccion;
-		this.robetes = robetes;
-		this.stop = stop;
-	}
-	public int getRadio() {
+
+public enum Direction{Derecha, Izquierda,Arriba,Abajo};
+
+	public Balls(Double radio, Double posX, Double posY, int espera, Direction direccion, int robetes, boolean stop) {
+	super();
+	this.radio = radio;
+	this.posX = posX;
+	this.posY = posY;
+	this.espera = espera;
+	this.direccion = direccion;
+	this.robetes = robetes;
+	this.stop = stop;
+}
+	public Double getRadio() {
 		return radio;
 	}
-	public void setRadio(int radio) {
+	public void setRadio(Double radio) {
 		this.radio = radio;
 	}
-	public int getPosX() {
+	public Double getPosX() {
 		return posX;
 	}
-	public void setPosX(int posX) {
+	public void setPosX(Double posX) {
 		this.posX = posX;
 	}
-	public int getPosY() {
+	public Double getPosY() {
 		return posY;
 	}
-	public void setPosY(int posY) {
+	public void setPosY(Double posY) {
 		this.posY = posY;
 	}
 	public int getEspera() {
@@ -45,10 +49,10 @@ public class Balls {
 	public void setEspera(int espera) {
 		this.espera = espera;
 	}
-	public String getDireccion() {
+	public Direction getDireccion() {
 		return direccion;
 	}
-	public void setDireccion(String direccion) {
+	public void setDireccion(Direction direccion) {
 		this.direccion = direccion;
 	}
 	public int getRobetes() {
@@ -61,54 +65,64 @@ public class Balls {
 		return stop;
 	}
 	public void setStop(boolean stop) {
-		this.stop = stop;
+		this.stop = stop; 
 	}
 	
-	public Double distance(Balls m) {
-    	double pow1 = Math.pow((posX - m.getPosX()), 2);
-    	double pow2 = Math.pow((posY - m.getPosY()), 2);
+	public Double distance(Double x,Double y) {
+    	double pow1 = Math.pow((posX - x), 2);
+    	double pow2 = Math.pow((posY - y), 2);
     	pow1 = pow1 + pow2;
 		return Math.sqrt(pow1);
 	}
 	 
-	public void move(double maxX, double maxY,String direction) {
+	public void stopBolita(Double x,Double y) {
+		
+		if(distance(x,y) <= radio) {
+			stop = true;
+		}
+		
+	}
+
+	
+	public void move(double maxX, double maxY) {
 		double advance = 10;
 		double radius = radio/2;
-		switch(direction) { 
-			case "ABAJO":
+		switch(direccion) { 
+			case Abajo:
 				if(posY+advance+radius>maxY) {
-					direction = "ARRIBA";
-	
-					posY = (int) (maxY-radius);
+					direccion = Direction.Arriba;
+					robetes++;
+					posY =  (maxY-radius);
 				}else {
-					posY = (int) (posY+advance);					
+					posY =  (posY+advance);					
 				}
 				break;
-			case "DERECHA":
+			case Derecha:
 				if(posX+advance+radius>maxX) {
-					direction = "IZQUIERDA";
-					
-					posX = (int) (maxX-radius);
+					direccion = Direction.Izquierda;
+					robetes++;
+					posX =  (maxX-radius);
 				}else {
-					posX = (int) (posX+advance);					
+					posX =  (posX+advance);					
 				}
 				break;
-			case "ARRIBA":
+			case Arriba:
 				if(posY-advance-radius<0) {
 					
-					direction = "ABAJO";
-					posY = (int) radius;
+					direccion = Direction.Abajo;
+					robetes++;
+					posY =  radius;
 				}else {
-					posY = (int) (posY-advance);			
+					posY =  (posY-advance);			
 				}
 				break;
-			case "IZQUIERDA":
+			case Izquierda:
 				if(posX-advance-radius<0) {
-					
-					setDireccion(direction);
-					posX = (int) radius;
+					direccion = Direction.Derecha;
+					robetes++;
+					posX =  radius;
 				}else {
-					posX = (int) (posX-advance);			
+					posX =  (posX-advance);			
 				}
 				break;
 			}

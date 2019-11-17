@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,7 +18,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
+import javafx.stage.Screen;
 import model.*;
 import Thread.*;
 
@@ -44,21 +47,27 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	
-		juego = new game(0,0);
-		games = new ArrayList<ThreadGame>();
-		canvas = new Canvas(pane1.getPrefHeight(),pane1.getPrefWidth());
-		gt = canvas.getGraphicsContext2D();
-		pane1.getChildren().add(canvas);
-		System.out.println(darMayorHeight());
-		System.out.println(darMayorWithd());
 	}
 	
 	public void loadGame(ActionEvent e) {
-		juego.readGame(); 
 		pane1.getChildren().clear();
-		juego1 = new game(juego.getNivel(),juego.getPuntaje());
-		System.out.println(juego.getNivel());
+		juego = new game(0,0);
+		juego.readGame();
+		games = new ArrayList<ThreadGame>();
+		Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+		pane1.setPrefSize(visualBounds.getWidth(), visualBounds.getHeight());
+		canvas = new Canvas(pane1.getPrefWidth(),pane1.getPrefHeight());
+		gt = canvas.getGraphicsContext2D();
+		pane1.getChildren().add(canvas);
 		createBalls(juego.getBolas());
+		canvas.setOnMouseClicked(f -> ballPosition(f));
+	}
+	public void ballPosition(MouseEvent e) {
+		
+		Double x = e.getSceneX();
+		Double y = e.getSceneY();
+		
+		juego.ballGame(x, y);
 	}
 	
 	public void createBalls(ArrayList<Balls> m) {
@@ -69,11 +78,23 @@ public class MainController implements Initializable {
 			e.start();			
 		}
 		
-		for(int j = 0; j < m.size();j++) {
-			ThreadPaintGame e1 = new ThreadPaintGame(m.get(j),this);
-			e1.start();
-		}
 		
+			ThreadPaintGame e1 = new ThreadPaintGame(this);
+			e1.start();
+		
+	}
+	
+	public void paintBall() {
+		ArrayList<Balls> m1 = juego.getBolas();
+		gt.clearRect(0,0,pane1.getPrefWidth(),pane1.getPrefHeight());
+		for(int i = 0; i < m1.size();i++) {
+			Double x =  (m1.get(i).getPosX() - m1.get(i).getRadio());
+			Double y =  (m1.get(i).getPosY() - m1.get(i).getRadio());
+			Double radio = (m1.get(i).getRadio()*2);
+			gt.setFill(Color.ANTIQUEWHITE);
+			gt.fillOval(x, y,radio , radio);
+		}
+		 
 		
 	}
 	
@@ -85,13 +106,6 @@ public class MainController implements Initializable {
 		this.juego = juego;
 	}
 
-	public game getJuego1() {
-		return juego1;
-	}
-
-	public void setJuego1(game juego1) {
-		this.juego1 = juego1;
-	}
 
 	public Canvas getCanvas() {
 		return canvas;
@@ -117,7 +131,8 @@ public class MainController implements Initializable {
 		this.gt = gt;
 	}
 
-	public void checkFinishGame() {
+	public Boolean checkFinishGame() {
+		Boolean t = false;
 		ArrayList<Balls> bolas1 = juego.getBolas();
 		int j = 0;
 		for(int i = 0; i < bolas1.size();i++) {
@@ -127,9 +142,9 @@ public class MainController implements Initializable {
 		}
 		
 		if(j == bolas1.size()) {
-			finishGame();
+			t = true;
 		}
-		
+		return t;
 	}
 	
 	public void finishGame() {

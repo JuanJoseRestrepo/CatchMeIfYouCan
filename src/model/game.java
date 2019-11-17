@@ -12,6 +12,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import model.Balls.Direction;
 
 public class game implements Serializable{
 
@@ -53,8 +54,15 @@ public class game implements Serializable{
 	}
 	public void setPuntajes(ArrayList<Score> puntajes) {
 		this.puntajes = puntajes;
-	}
+	} 
 	
+	public void ballGame(Double x,Double y) {
+		
+		for(int i = 0; i < bolas.size();i++) {
+			bolas.get(i).stopBolita(x, y); 
+		}
+		
+	}
 	
 	public void readGame() {
 		File fl = new File("files\\Juego.txt");
@@ -68,17 +76,15 @@ public class game implements Serializable{
 			String a1;
 			while((a1 = br.readLine()) != null) {
 				String[] b = a1.split(",");
-				int radio = Integer.parseInt(b[0]);
-				int posX = Integer.parseInt(b[1]);
-				int posY = Integer.parseInt(b[2]);
-				int espera = Integer.parseInt(b[3]);
-				String direccion = b[4];
+				Double radio = Double.parseDouble(b[0]);
+				Double posX = Double.parseDouble(b[1]);
+				Double posY = Double.parseDouble(b[2]);
+				int espera = Integer.parseInt(b[3]); 
+				Direction direccion = Direction.valueOf(b[4]);
 				int rebotes = Integer.parseInt(b[5]);
-				String stopped = b[6];
-					if(stopped.equalsIgnoreCase("false")){
-					Balls m = new Balls(radio,posX,posY,espera,direccion,rebotes,false);
-					bolas.add(m);
-					}	
+				Boolean stopped = Boolean.parseBoolean(b[6]);
+				Balls m = new Balls(radio,posX,posY,espera,direccion,rebotes,stopped);
+				bolas.add(m);
 			}
 			br.close();
 		} catch (FileNotFoundException e) {
@@ -91,7 +97,7 @@ public class game implements Serializable{
 	}
 	
 	public void serializableGame() {
-		File fl = new File("files/");
+		File fl = new File("files/Juego.restrepo");
 		
 		try {
 			FileOutputStream  fos = new FileOutputStream(fl);
@@ -107,7 +113,7 @@ public class game implements Serializable{
 	}
 	
 	public void deserializableGame() {
-		File fl = new File("files/");
+		File fl = new File("files/Juego.restrepo");
 		ArrayList<Score> score1;
 		try {
 			FileInputStream fls = new FileInputStream(fl);
@@ -123,12 +129,12 @@ public class game implements Serializable{
 		
 	}
 	
-	public void startGame() {
-		
+	public int startGame() {
+		int m = 0;
 		for(int i = 0; i < bolas.size();i++) {
-			
+			m += bolas.get(i).getRobetes();
 		}
-		
+		return m;
 	}
 	
 }
