@@ -28,7 +28,7 @@ public class ThreadGame extends Thread {
 		while(balls.isStop() == false) {
 			try {
 				moveBall();
-				System.out.println(balls.getDireccion());
+				
 				Thread.sleep(balls.getEspera());
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block

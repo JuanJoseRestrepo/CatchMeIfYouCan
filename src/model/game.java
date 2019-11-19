@@ -24,6 +24,7 @@ public class game implements Serializable{
 	private int puntaje;
 	private ArrayList<Balls> bolas;
 	private ArrayList<Score> puntajes;
+	private int finishgame = 0;
 	public game(int nivel, int puntaje) {
 		super();
 		this.nivel = nivel;
@@ -129,6 +130,31 @@ public class game implements Serializable{
 		
 	}
 	
+	public Boolean countStopBalls() {
+		Boolean t = false;
+		
+		for(int i = 0; i < bolas.size() && !t;i++) {
+			
+			if(bolas.get(i).isStop() == true) {
+			  finishgame++;	
+			  System.out.println(finishgame);
+			}else {
+				finishgame--;
+			}
+		}
+		if(finishgame >= bolas.size()) {
+			t = true;
+		}
+		
+		return t;
+	}
+	
+	public int getFinishgame() {
+		return finishgame;
+	}
+	public void setFinishgame(int finishgame) {
+		this.finishgame = finishgame;
+	}
 	public int startGame() {
 		int m = 0;
 		for(int i = 0; i < bolas.size();i++) {

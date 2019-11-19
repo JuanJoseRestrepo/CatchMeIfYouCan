@@ -14,6 +14,7 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -39,6 +40,7 @@ public class MainController implements Initializable {
 	private BorderPane pane;
 	@FXML
 	private Pane pane1;
+
 	
 	private List<ThreadGame> games;
 	private GraphicsContext gt;
@@ -52,6 +54,7 @@ public class MainController implements Initializable {
 	public void loadGame(ActionEvent e) {
 		pane1.getChildren().clear();
 		juego = new game(0,0);
+		juego.setFinishgame(0);
 		juego.readGame();
 		games = new ArrayList<ThreadGame>();
 		Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
@@ -68,6 +71,16 @@ public class MainController implements Initializable {
 		Double y = e.getSceneY();
 		
 		juego.ballGame(x, y);
+		
+		System.out.println(m);
+		if(juego.countStopBalls() == true) {
+			TextInputDialog dialog = new TextInputDialog("walter");
+			dialog.setTitle("Text Input Dialog");
+			dialog.setHeaderText("Look, a Text Input Dialog");
+			dialog.setContentText("Please enter your name:");
+			dialog.showAndWait();
+		}
+		
 	}
 	
 	public void createBalls(ArrayList<Balls> m) {
