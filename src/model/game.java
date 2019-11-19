@@ -12,6 +12,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import Exceptions.puntajeVacio;
 import model.Balls.Direction;
 
 public class game implements Serializable{
@@ -24,13 +26,13 @@ public class game implements Serializable{
 	private int puntaje;
 	private ArrayList<Balls> bolas;
 	private ArrayList<Score> puntajes;
-	private int finishgame = 0;
 	public game(int nivel, int puntaje) {
 		super();
 		this.nivel = nivel;
 		this.puntaje = puntaje;
 		bolas = new ArrayList<Balls>();
 		puntajes =new ArrayList<Score>();
+		deserializableGame();
 	}
 	public int getNivel() {
 		return nivel;
@@ -61,6 +63,40 @@ public class game implements Serializable{
 		
 		for(int i = 0; i < bolas.size();i++) {
 			bolas.get(i).stopBolita(x, y); 
+		}
+		
+	}  
+	
+	public Double calculateScore() {
+		Double m = 0.0;
+		
+		if(countRebotes() < 10) {
+			if(nivel == 1) {
+			m = (double) countRebotes() * 10 + (Math.random() + 1 * 100);
+		    }else if(nivel == 2) {
+		    m = (double) countRebotes() * 100 + (Math.random() + 1 * 1000);
+		    }else if(nivel == 3) {
+		    m = (double) countRebotes() * 1000 + (Math.random() + 1 * 10000);
+		    }
+		}else if(countRebotes() > 20) {
+			if(nivel == 1) {
+			m = (double) countRebotes() * 1 + (Math.random() + 1 * 100);
+		    }else if(nivel == 2) {
+		    m = (double) countRebotes() * 10 + (Math.random() + 1 * 1000);
+		    }else if(nivel == 3) {
+		    m = (double) countRebotes() * 100 + (Math.random() + 1 * 10000);
+		    }	
+		}
+		return m;
+	}
+	
+	public void addScore(String score) throws puntajeVacio {
+		
+		if(score.isEmpty()) {
+			throw new puntajeVacio("");
+		}else {
+				Score m = new Score(calculateScore(),score);
+				puntajes.add(m);
 		}
 		
 	}
@@ -100,13 +136,14 @@ public class game implements Serializable{
 	public void serializableGame() {
 		File fl = new File("files/Juego.restrepo");
 		
+
 		try {
 			FileOutputStream  fos = new FileOutputStream(fl);
 			ObjectOutputStream  oos = new ObjectOutputStream(fos);
 			
 			oos.writeObject(puntajes);
 			oos.close();
-			
+			  
 		}catch(IOException e) {
 			e.getCause();
 		}
@@ -116,6 +153,7 @@ public class game implements Serializable{
 	public void deserializableGame() {
 		File fl = new File("files/Juego.restrepo");
 		ArrayList<Score> score1;
+		if(!puntajes.isEmpty()) {
 		try {
 			FileInputStream fls = new FileInputStream(fl);
 			ObjectInputStream ois = new ObjectInputStream(fls);
@@ -123,44 +161,48 @@ public class game implements Serializable{
 			 setPuntajes(score1);
 			 ois.close();		
 		}catch(IOException e) {
-			
+			e.getCause();
 		}catch(ClassNotFoundException e) {
-			
+			e.getCause();
 		}
-		
+		}
 	}
 	
 	public Boolean countStopBalls() {
 		Boolean t = false;
-		
+		int m = 0;
 		for(int i = 0; i < bolas.size() && !t;i++) {
 			
 			if(bolas.get(i).isStop() == true) {
-			  finishgame++;	
-			  System.out.println(finishgame);
-			}else {
-				finishgame--;
+			  m++;	
+			  System.out.println(m);
 			}
 		}
-		if(finishgame >= bolas.size()) {
+		if(m >= bolas.size()) {
 			t = true;
 		}
-		
 		return t;
 	}
-	
-	public int getFinishgame() {
-		return finishgame;
-	}
-	public void setFinishgame(int finishgame) {
-		this.finishgame = finishgame;
-	}
-	public int startGame() {
+ 
+	public int countRebotes() {
 		int m = 0;
 		for(int i = 0; i < bolas.size();i++) {
 			m += bolas.get(i).getRobetes();
 		}
 		return m;
+	}
+	
+	public void ordenarPuntajes() {
+		
+		for(int i = 0; i < puntajes.size();i++) {
+			for(int j = 0; j < puntajes.size()-1-i;j++) {
+				if(puntajes.get(j).getPuntaje() > (puntajes.get(j+1).getPuntaje())) {
+					Score own = puntajes.get(j);
+					puntajes.set(j,puntajes.get(j+1));
+					puntajes.set(j+1, own);		
+				}
+			}
+		}	
 	}
 	
 }

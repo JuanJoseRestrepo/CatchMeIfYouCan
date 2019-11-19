@@ -11,7 +11,6 @@ public class Balls {
 	private Direction direccion;
 	private int robetes;
 	private boolean stop;
-	
 
 public enum Direction{Derecha, Izquierda,Arriba,Abajo};
 
@@ -74,7 +73,7 @@ public enum Direction{Derecha, Izquierda,Arriba,Abajo};
     	pow1 = pow1 + pow2;
 		return Math.sqrt(pow1);
 	}
-	 
+
 	public void stopBolita(Double x,Double y) {
 		
 		if(distance(x,y) <= radio) {
@@ -104,11 +103,11 @@ public enum Direction{Derecha, Izquierda,Arriba,Abajo};
 					posX =  (maxX-radius);
 				}else {
 					posX =  (posX+advance);					
-				}
+				} 
 				break;
 			case Arriba:
 				if(posY-advance-radius<0) {
-					
+					 
 					direccion = Direction.Abajo;
 					robetes++;
 					posY =  radius;

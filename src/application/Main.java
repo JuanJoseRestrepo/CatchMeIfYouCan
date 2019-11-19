@@ -13,7 +13,7 @@ public class Main extends Application {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/Controller/ControlVentana.fxml"));
 			primaryStage.setScene(new Scene(root));
-			primaryStage.show();
+			primaryStage.show();  
 		} catch(Exception e) {
 			e.printStackTrace();
 		} 

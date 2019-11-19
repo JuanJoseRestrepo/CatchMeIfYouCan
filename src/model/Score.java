@@ -1,18 +1,32 @@
 package model;
 
-public class Score {
+public class Score  {
 
 	
-	private int puntaje;
+	private double puntaje;
 	private String nombre;
-	private int num;
-	public Score(int puntaje, String nombre, int num) {
+	public Score(double puntaje, String nombre) {
 		super();
 		this.puntaje = puntaje;
 		this.nombre = nombre;
-		this.num = num;
+	 
 	}
+	public double getPuntaje() {
+		return puntaje;
+	}
+	public void setPuntaje(double puntaje) {
+		this.puntaje = puntaje;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
 	
 	
+	 
 	
 }
