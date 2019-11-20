@@ -16,7 +16,7 @@ public class ThreadPaintGame extends Thread{
 		try {
 		while(!m.checkFinishGame()) {
 			m.paintBall();
-			Thread.sleep(5);
+			Thread.sleep(2);
 		}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

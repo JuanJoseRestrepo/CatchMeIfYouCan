@@ -137,4 +137,11 @@ public class game implements Serializable{
 		return m;
 	}
 	
+	public void compareAllScoreInGame() {
+		
+		
+		
+	}
+	
+	
 }

@@ -40,7 +40,6 @@ public class MainController implements Initializable {
 	@FXML
 	private Pane pane1;
 	
-	private List<ThreadGame> games;
 	private GraphicsContext gt;
 	
 	
@@ -53,7 +52,6 @@ public class MainController implements Initializable {
 		pane1.getChildren().clear();
 		juego = new game(0,0);
 		juego.readGame();
-		games = new ArrayList<ThreadGame>();
 		Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
 		pane1.setPrefSize(visualBounds.getWidth(), visualBounds.getHeight());
 		canvas = new Canvas(pane1.getPrefWidth(),pane1.getPrefHeight());
@@ -74,7 +72,6 @@ public class MainController implements Initializable {
 		
 		for(int i = 0; i < m.size();i++) {
 			ThreadGame e = new ThreadGame(m.get(i), this);
-			games.add(e);
 			e.start();			
 		}
 		
@@ -91,7 +88,7 @@ public class MainController implements Initializable {
 			Double x =  (m1.get(i).getPosX() - m1.get(i).getRadio());
 			Double y =  (m1.get(i).getPosY() - m1.get(i).getRadio());
 			Double radio = (m1.get(i).getRadio()*2);
-			gt.setFill(Color.ANTIQUEWHITE);
+			gt.setFill(Color.TOMATO);
 			gt.fillOval(x, y,radio , radio);
 		}
 		 
