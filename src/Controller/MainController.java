@@ -1,33 +1,40 @@
 package Controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import Exceptions.puntajeVacio;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
 import model.*;
 import Thread.*;
 
 public class MainController implements Initializable {
 
 	private game juego;
-	private game juego1;
+
 	private Canvas canvas;
 	@FXML
 	private MenuItem m;
@@ -39,6 +46,7 @@ public class MainController implements Initializable {
 	private BorderPane pane;
 	@FXML
 	private Pane pane1;
+
 	
 	private GraphicsContext gt;
 	
@@ -61,11 +69,31 @@ public class MainController implements Initializable {
 		canvas.setOnMouseClicked(f -> ballPosition(f));
 	}
 	public void ballPosition(MouseEvent e) {
-		
+		try {
 		Double x = e.getSceneX();
 		Double y = e.getSceneY();
 		
 		juego.ballGame(x, y);
+		
+		if(juego.countStopBalls() == true) {
+			TextInputDialog dialog = new TextInputDialog();
+			dialog.setTitle("Text Input Dialog");
+			dialog.setHeaderText("Look, a Text Input Dialog");
+			dialog.setContentText("Please enter your name:");
+			dialog.showAndWait();
+			TextField msj = dialog.getEditor();
+			String msj1 = msj.getText();
+			System.out.println(msj1);
+			juego.addScore(msj1);
+		}
+		}catch(puntajeVacio e1) {
+			Alert gameOver = new Alert(AlertType.INFORMATION);
+			gameOver.setTitle("Game Over!");
+			gameOver.setHeaderText("No puedes poner el puntaje vacio!");
+			gameOver.setContentText(
+					"Perdiste!!! Noooooooo");
+			gameOver.showAndWait();
+		}
 	}
 	
 	public void createBalls(ArrayList<Balls> m) {
@@ -91,7 +119,7 @@ public class MainController implements Initializable {
 			gt.setFill(Color.TOMATO);
 			gt.fillOval(x, y,radio , radio);
 		}
-		 
+		   
 		
 	}
 	
@@ -143,11 +171,6 @@ public class MainController implements Initializable {
 		}
 		return t;
 	}
-	
-	public void finishGame() {
-		
-		
-	}
 
 	public Double darMayorHeight() {
 		
@@ -158,6 +181,30 @@ public class MainController implements Initializable {
 	public Double darMayorWithd() {
 	
 		return pane1.getPrefWidth();
+		
+	}
+	
+	public void salir(ActionEvent e) {
+		juego.serializableGame();
+		System.exit(0);
+	}
+	
+	public void irPuntaje(ActionEvent e) {
+		try {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Controller/MejoresPuntajes.fxml"));
+		Parent root = (Parent)loader.load();
+
+		Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+		stage.setScene(new Scene(root));
+		stage.show();
+		
+		}catch(IOException e1){
+			e1.getCause();
+		}
+		
+		
+		
+		
 		
 	}
 	
