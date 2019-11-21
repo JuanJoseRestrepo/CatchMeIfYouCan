@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -19,11 +20,13 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
@@ -54,7 +57,8 @@ public class MainController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-	
+	 juego = new game(0,0);
+	 m1.setDisable(true);
 	}
 	
 	public void loadGame(ActionEvent e) {
@@ -64,11 +68,14 @@ public class MainController implements Initializable {
 		games = new ArrayList<ThreadGame>();
 		Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
 		pane1.setPrefSize(visualBounds.getWidth(), visualBounds.getHeight());
+		System.out.println(pane1.getPrefHeight());
+		System.out.println(pane1.getPrefWidth()+ "1");
 		canvas = new Canvas(pane1.getPrefWidth(),pane1.getPrefHeight());
 		gt = canvas.getGraphicsContext2D();
 		pane1.getChildren().add(canvas);
 		createBalls(juego.getBolas());
 		canvas.setOnMouseClicked(f -> ballPosition(f));
+		m1.setDisable(false);
 	}
 	public void ballPosition(MouseEvent e) {
 		try {
@@ -87,6 +94,7 @@ public class MainController implements Initializable {
 			String msj1 = msj.getText();
 			System.out.println(msj1);
 			juego.addScore(msj1);
+			juego.serializableGame();
 		}
 		}catch(puntajeVacio e1) {
 			Alert gameOver = new Alert(AlertType.INFORMATION);
@@ -122,7 +130,6 @@ public class MainController implements Initializable {
 			gt.setFill(Color.TOMATO);
 			gt.fillOval(x, y,radio , radio);
 		}
-		   
 		
 	}
 	
@@ -188,27 +195,44 @@ public class MainController implements Initializable {
 	}
 	
 	public void salir(ActionEvent e) {
+		try {
 		juego.serializableGame();
+		}catch(NullPointerException e1) {
+			Alert gameOver = new Alert(AlertType.INFORMATION);
+			gameOver.setTitle("Game Over!");
+			gameOver.setHeaderText("No puedes poner el puntaje vacio!");
+			gameOver.setContentText(
+					"Perdiste!!! Noooooooo");
+			gameOver.showAndWait();
+		}
 		System.exit(0);
 	}
 	
 	public void irPuntaje(ActionEvent e) {
 		try {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Controller/MejoresPuntajes.fxml"));
-		Parent root = (Parent)loader.load();
-
-		Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-		stage.setScene(new Scene(root));
-		stage.show();
-		
-		}catch(IOException e1){
-			e1.getCause();
+			pane1.getChildren().clear();
+			HBox score = new HBox();
+			score.setSpacing(30); 
+			score.setAlignment(Pos.CENTER);
+			Label niveles = new Label("Puntajes de niveles 1,2,3");
+			score.getChildren().add(niveles);
+			if(juego.getBolas() != null) {
+			for(int i = 0; i < juego.getPuntajes().size();i++) {
+				juego.ordenarPuntajes();
+				juego.ordenarNivel();
+				Label lavel = new Label(juego.getPuntajes().get(i).toString() + "\n");
+				score.getChildren().add(lavel);
+				}
+			pane1.getChildren().add(score);
+			}
+		}catch(NullPointerException e1) {
+			Alert gameOver = new Alert(AlertType.INFORMATION);
+			gameOver.setTitle("Game Over!");
+			gameOver.setHeaderText("xd!");
+			gameOver.setContentText(
+					"Perdiste!!! Noooooooo");
+			gameOver.showAndWait();
 		}
-		
-		
-		
-		
-		
 	}
 	
-}
+}	
