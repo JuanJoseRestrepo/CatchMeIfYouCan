@@ -216,7 +216,6 @@ public class MainController implements Initializable {
 			if(juego.getBolas() != null) {
 			for(int i = 0; i < juego.getPuntajes().size();i++) {
 				juego.ordenarPuntajes();
-				juego.ordenarNivel();
 				Label lavel = new Label(juego.getPuntajes().get(i).toString() + "\n");
 				score.getChildren().add(lavel);
 				}

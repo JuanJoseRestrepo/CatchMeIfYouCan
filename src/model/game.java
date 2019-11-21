@@ -190,7 +190,7 @@ public class game implements Serializable{
 		
 		for(int i = 0; i < puntajes.size();i++) {
 			for(int j = 0; j < puntajes.size()-1-i;j++) {
-				if(puntajes.get(j).getPuntaje() > (puntajes.get(j+1).getPuntaje()) && puntajes.get(j).getNivel() >= puntajes.get(j+1).getNivel()) {
+				if(puntajes.get(j).getPuntaje() > (puntajes.get(j+1).getPuntaje())) {
 					Score own = puntajes.get(j);
 					puntajes.set(j,puntajes.get(j+1));
 					puntajes.set(j+1, own);		
