@@ -51,7 +51,6 @@ public class MainController implements Initializable {
 	private Pane pane1;
 
 	
-	private List<ThreadGame> games;
 	private GraphicsContext gt;
 	
 	
@@ -65,7 +64,6 @@ public class MainController implements Initializable {
 		pane1.getChildren().clear();
 		juego = new game(0,0);
 		juego.readGame();
-		games = new ArrayList<ThreadGame>();
 		Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
 		pane1.setPrefSize(visualBounds.getWidth(), visualBounds.getHeight());
 		System.out.println(pane1.getPrefHeight());
@@ -110,7 +108,6 @@ public class MainController implements Initializable {
 		
 		for(int i = 0; i < m.size();i++) {
 			ThreadGame e = new ThreadGame(m.get(i), this);
-			games.add(e);
 			e.start();			
 		}
 		

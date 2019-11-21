@@ -14,10 +14,24 @@ public class Score implements Serializable {
 		this.nombre = nombre;
 		this.setNivel(nivel);
 	}
+<<<<<<< HEAD
 	public int getPuntaje() {
 		return puntaje;
 	}
 	public void setPuntaje(int puntaje) {
+=======
+<<<<<<< HEAD
+	public int getPuntaje() {
+		return puntaje;
+	}
+	public void setPuntaje(int puntaje) {
+=======
+	public double getPuntaje() {
+		return puntaje;
+	}
+	public void setPuntaje(double puntaje) {
+>>>>>>> e7016384fff3e494ae384b3d60f38dfd85349408
+>>>>>>> 5ac06eec34d6dd0c1bd26e2d13ac2ddc74513375
 		this.puntaje = puntaje;
 	}
 	public String getNombre() {
@@ -26,6 +40,7 @@ public class Score implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+<<<<<<< HEAD
 	public int getNivel() {
 		return nivel;
 	}
@@ -44,6 +59,20 @@ public class Score implements Serializable {
 		return msj;
 		
 	}
+=======
+<<<<<<< HEAD
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+=======
+
+
+>>>>>>> e7016384fff3e494ae384b3d60f38dfd85349408
+	
+>>>>>>> 5ac06eec34d6dd0c1bd26e2d13ac2ddc74513375
 	
 	 
 	

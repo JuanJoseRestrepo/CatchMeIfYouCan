@@ -177,6 +177,15 @@ public class game implements Serializable{
 		return m;
 	}
 	
+<<<<<<< HEAD
+	public void compareAllScoreInGame() {
+		
+		
+		
+	}
+	
+	
+=======
 	public void ordenarPuntajes() {
 		
 		for(int i = 0; i < puntajes.size();i++) {
@@ -190,6 +199,7 @@ public class game implements Serializable{
 		}	
 	}
 	
+<<<<<<< HEAD
 	public void ordenarNivel() {
 		
 		for(int i = 0; i < puntajes.size();i++) {
@@ -203,4 +213,7 @@ public class game implements Serializable{
 		}
 	}
 	
+=======
+>>>>>>> e7016384fff3e494ae384b3d60f38dfd85349408
+>>>>>>> 5ac06eec34d6dd0c1bd26e2d13ac2ddc74513375
 }
