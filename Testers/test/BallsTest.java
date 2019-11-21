@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import model.Balls;
 import model.Balls.Direction;
 import model.game;
-
+ 
 class BallsTest {
 
 	private game games;
