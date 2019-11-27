@@ -2,6 +2,7 @@ package Thread;
 
 
 import Controller.MainController;
+import javafx.application.Platform;
 
 public class ThreadPaintGame extends Thread{
 
@@ -13,9 +14,21 @@ public class ThreadPaintGame extends Thread{
 	}
 	
 	public void run() {
+		
+		Runnable win = new Runnable() {
+
+			@Override
+			public void run() {
+				m.paintBall();
+			}
+			
+			
+			
+		};
+		
 		try {
 		while(!m.checkFinishGame()) {
-			m.paintBall();
+			Platform.runLater(win);
 			Thread.sleep(2);
 		}
 		} catch (InterruptedException e) {
